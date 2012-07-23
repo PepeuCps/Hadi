@@ -15,13 +15,13 @@ It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](ht
 
 Add attribute "android:name" into element application, it looks like this:
 
-<application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name">
+		<application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name">
 
 Define your database name and version under element Application, it looks like this::
 
-<application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name">
+		<application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name">
   		<meta-data android:name="Hadi_DB_NAME" android:value="demo.db" />
-			<meta-data android:name="Hadi_DB_VERSION" android:value="1" />
+		<meta-data android:name="Hadi_DB_VERSION" android:value="1" />
 
 3. Write your table's model class:
 
@@ -51,5 +51,21 @@ Define your database name and version under element Application, it looks like t
 		b1.name = "Who Moved My Cheese";
 		b1.sn = "sn123456789";
 		dao.insert(b1);
+		
+		/** for update data */
+		b1.sn = "sn987654321";
+		dao.update_by_primary(b1);
+		
+		/** for select */
+		String[] args = {"0"};
+		List<Book> books = (List<Book>)dao.select(Book.class, false, " id > ?", args, null, null, null, null);
+		System.out.println(books.size());
+		for(Book b:books){
+			System.out.println(b.id+"=="+b.name);
+		}
+		b1.id = 1;
+		
+		/** for delete */
+		dao.delete_by_primary(b1);		
 
 5. You could find all the example codes from demo project.
