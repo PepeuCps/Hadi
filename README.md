@@ -3,8 +3,9 @@
 **Hadi** is an Android ORM Framework. It makes SQLite using in Android easy and simple. 
 Hadi is and open source project. You can use it free, change it and even re-publish it.
 
-This project was imported from SourceForge. (http://hadi.sourceforge.net/)
-It was originally created by The9tCat (http://sourceforge.net/users/the9tcat)
+This project was imported from SourceForge. [http://hadi.sourceforge.net/](http://hadi.sourceforge.net/)
+
+It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](http://sourceforge.net/users/the9tcat)
 
 # How to use
 
