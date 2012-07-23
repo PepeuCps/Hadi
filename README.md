@@ -9,7 +9,7 @@ It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](ht
 
 # How to use
 
-1. Import Hadi library **(hadi_sdk.jar)** into your Android project.
+1. Import Hadi library **(hadi_sdk.jar)** into your Android project. (For now download here the binary: [hadi_sdk.jar](http://sourceforge.net/projects/hadi/files/))
 
 2. Edit your **AndroidManifest.xml**
 
