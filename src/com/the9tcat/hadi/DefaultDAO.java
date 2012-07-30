@@ -198,8 +198,6 @@ public class DefaultDAO {
 		return list;
 	}
 	
-	
-
 	private long insertModel(SQLiteDatabase db,Object model){
 		ContentValues values = new ContentValues();
 		List<ColumnAttribute> atas = Util.getTableColumn(mApplication, (Class<?>)model.getClass());
@@ -243,5 +241,23 @@ public class DefaultDAO {
 		}
 		long result = db.insert(Util.getTableName(model.getClass()), null, values);
 		return result;
+	}
+	
+	public Object findFirst(final Class<?> cls, String whereClause, String[] whereArgs) {
+		List<?> list = this.select(cls, false, whereClause, whereArgs, null, null, null, null);
+		
+		if (list.size() > 0) {
+			return list.iterator().next();
+		}
+		return null;
+	}
+	
+	public Object findFirst(final Class<?> cls) {
+		List<?> list = this.select(cls, false, null, null, null, null, null, "1");
+		
+		if (list.size() > 0) {
+			return list.iterator().next();
+		}
+		return null;
 	}
 }

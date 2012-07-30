@@ -93,25 +93,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 	private static ArrayList<Class<?>> getEntityClasses(Context context) {
 		ArrayList<Class<?>> entityClasses = new ArrayList<Class<?>>();
+		
 		try {
-			String path = context.getPackageManager().getApplicationInfo(
-					context.getPackageName(), 0).sourceDir;
-			DexFile dexfile = new DexFile(path);
+			String packageName = context.getPackageName();
+			String path = context.getPackageManager().getApplicationInfo(context.getPackageName(), 0).sourceDir;	
+			DexFile dexfile = new DexFile(path);			
 			Enumeration<String> entries = dexfile.entries();
+			
 			while (entries.hasMoreElements()) {
 				String name = (String) entries.nextElement();
-				Class<?> discoveredClass = null;
-				try {
-					discoveredClass = Class.forName(name, true, context
-							.getClass().getClassLoader());
-				} catch (ClassNotFoundException e) {
-					Log.e("ActiveORM", e.getMessage());
+				
+				if(name.contains(packageName)){
+					Log.i(LogParams.LOGGING_TAG, "Found class: " + name);
+					Class<?> discoveredClass = null;
+					try {
+						discoveredClass = Class.forName(name, true, context.getClass().getClassLoader());
+					} catch (ClassNotFoundException e) {
+						Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					}
+
+					if ((discoveredClass == null) ||
+						discoveredClass.getAnnotation(Table.class) == null) {
+						continue;
+					}					
+					entityClasses.add((Class<?>)discoveredClass);
 				}
-				if ((discoveredClass == null)||
-						discoveredClass.getAnnotation(Table.class)==null) {
-					continue;
-				}
-				entityClasses.add((Class<?>)discoveredClass);
 			}
 		} catch (IOException e) {
 			Log.e(LogParams.LOGGING_TAG, e.getMessage());
