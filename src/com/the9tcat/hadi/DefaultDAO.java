@@ -14,22 +14,34 @@ public class DefaultDAO {
 	private DatabaseManager mDatabaseManager;
 	private HadiApplication mApplication;
 	private Context mContext;
+	private static boolean SHOW_LOG = false;
+	public static String Lock = "dblock";
 	
 	public DefaultDAO(Context context){
 		this.mApplication = ((HadiApplication)context.getApplicationContext());
 		this.mDatabaseManager = mApplication.getDataBaseManager();
 		this.mContext = context;
+		
+		SHOW_LOG = true;
 	}
+	
 	/**
 	 * 
 	 * @param model the model that you want to save to database
 	 * @return
 	 */
 	public long insert(Object model) {
-		SQLiteDatabase db = this.mDatabaseManager.open();
-		long result = insertModel(db,model);
-		Util.setAutoId(mApplication, model, result);
-		this.mDatabaseManager.close();
+		long result = 0;
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();
+			result = insertModel(db,model);
+			Util.setAutoId(mApplication, model, result);
+			this.mDatabaseManager.close();
+			
+			if(SHOW_LOG)
+				Log.i(LogParams.LOGGING_TAG, "Created Model: " + Util.dumpToString(model));
+		}
+		
 		return result;
 	}
 	
@@ -39,17 +51,28 @@ public class DefaultDAO {
 	 * @return
 	 */
 	public long insert_list(List<?> models) {
-		SQLiteDatabase db = this.mDatabaseManager.open();
 		long result = 0;
 		long tmp_id = 0;
-		for(Object obj:models){
-			tmp_id = insertModel(db,obj);
-			if(tmp_id>0){
-				Util.setAutoId(mApplication, obj, tmp_id);
-				result ++;
+		
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();	
+			try {				
+				db.beginTransaction();			
+				for(Object obj:models){
+					tmp_id = insertModel(db,obj);				
+					if(tmp_id>0){
+						Util.setAutoId(mApplication, obj, tmp_id);
+						result ++;			
+					}
+					db.yieldIfContendedSafely();
+				}
+				db.setTransactionSuccessful();
+			} finally { 
+				db.endTransaction();
+				this.mDatabaseManager.close();			
 			}
 		}
-		this.mDatabaseManager.close();
+		
 		return result;
 	}
 	
@@ -239,7 +262,12 @@ public class DefaultDAO {
 				values.put(ata.name, value.toString());
 			} 
 		}
+		
 		long result = db.insert(Util.getTableName(model.getClass()), null, values);
+		
+		if(SHOW_LOG)
+			Log.i(LogParams.LOGGING_TAG, "Created Model: " + Util.dumpToString(model));
+		
 		return result;
 	}
 	

@@ -27,7 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	}
 
 	@Override
-	public void onCreate(SQLiteDatabase arg0) {
+	public void onCreate(SQLiteDatabase db) {
 
 		ArrayList<Class<?>> tables = getEntityClasses(mContext);
 
@@ -75,20 +75,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 			Log.i(LogParams.LOGGING_TAG, sql);
 
-			arg0.execSQL(sql);
+			db.execSQL(sql);
 		}
 
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
-
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		Log.w(LogParams.LOGGING_TAG, "Upgrading database from version " + oldVersion + " to "
+				+ newVersion + ", which will destroy all old data");
+		
 		ArrayList<Class<?>> tables = getEntityClasses(this.mContext);
 		for (Class<?> table : tables) {
-			arg0.execSQL("DROP TABLE IF EXISTS "
+			db.execSQL("DROP TABLE IF EXISTS "
 					+ Util.getTableName(table));
 		}
-		onCreate(arg0);
+		onCreate(db);
 	}
 
 	private static ArrayList<Class<?>> getEntityClasses(Context context) {
