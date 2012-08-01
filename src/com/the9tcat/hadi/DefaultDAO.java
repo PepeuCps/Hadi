@@ -82,9 +82,15 @@ public class DefaultDAO {
 	 * @return
 	 */
 	public long delete(Class<?> model,String whereClause,String[] whereArgs) {
-		SQLiteDatabase db = this.mDatabaseManager.open();
-		long result = db.delete(Util.getTableName(model), whereClause, whereArgs);
-		this.mDatabaseManager.close();
+		long result = 0;
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();
+			result = db.delete(Util.getTableName(model), whereClause, whereArgs);
+			this.mDatabaseManager.close();
+			
+			if(SHOW_LOG)
+				Log.i(LogParams.LOGGING_TAG, "Deleted Model: " + Util.dumpToString(model));
+		}
 		return result;
 	}
 	
@@ -153,51 +159,56 @@ public class DefaultDAO {
 	 * @return
 	 */
 	public long update(Object model,String[] columns,String whereClause,String[] whereArgs){
+		long result = 0;
 		boolean update_column = false;
-		if(columns!=null&&columns.length>0){
+		
+		if(columns != null && columns.length > 0){
 			update_column = true;
 		}
-		SQLiteDatabase db = this.mDatabaseManager.open();
-		ContentValues values = new ContentValues();
-		List<ColumnAttribute> atas = Util.getTableColumn(mApplication, (Class<?>)model.getClass());
-		for (ColumnAttribute ata : atas) {
-			if(update_column&&!Util.hasColumn(ata.name, columns)){
-				continue;
+		
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();
+			ContentValues values = new ContentValues();
+			List<ColumnAttribute> atas = Util.getTableColumn(mApplication, (Class<?>)model.getClass());
+			for (ColumnAttribute ata : atas) {
+				if(update_column&&!Util.hasColumn(ata.name, columns)){
+					continue;
+				}
+				Object value = null;
+				try {
+					value = ata.field.get(model);
+				} catch (IllegalArgumentException e) {
+					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+				} catch (IllegalAccessException e) {
+					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+				}
+				if ((value.getClass().equals(Boolean.class))
+						|| (value.getClass().equals(Boolean.TYPE))) {
+					values.put(ata.name, (Boolean) value);
+				} else if (value.equals(java.util.Date.class)) {
+					values.put(ata.name, ((java.util.Date)value).getTime());
+				} else if (value.equals(java.sql.Date.class)) {
+					values.put(ata.name, ((java.sql.Date)value).getTime());
+				} else if ((value.equals(Double.class))
+						|| (value.equals(Double.TYPE))) {
+					values.put(ata.name, (Double) value);
+				} else if ((value.equals(Float.class))
+						|| (value.equals(Float.TYPE))) {
+					values.put(ata.name, (Float) value);
+				} else if ((value.getClass().equals(Integer.class))
+						|| (value.getClass().equals(Integer.TYPE))) {
+					values.put(ata.name, (Integer) value);
+				} else if ((value.getClass().equals(Long.class))
+						|| (value.getClass().equals(Long.TYPE))) {
+					values.put(ata.name, (Long) value);
+				} else if ((value.getClass().equals(String.class))
+						|| (value.getClass().equals(Character.TYPE))) {
+					values.put(ata.name, value.toString());
+				} 
 			}
-			Object value = null;
-			try {
-				value = ata.field.get(model);
-			} catch (IllegalArgumentException e) {
-				Log.e(LogParams.LOGGING_TAG, e.getMessage());
-			} catch (IllegalAccessException e) {
-				Log.e(LogParams.LOGGING_TAG, e.getMessage());
-			}
-			if ((value.getClass().equals(Boolean.class))
-					|| (value.getClass().equals(Boolean.TYPE))) {
-				values.put(ata.name, (Boolean) value);
-			} else if (value.equals(java.util.Date.class)) {
-				values.put(ata.name, ((java.util.Date)value).getTime());
-			} else if (value.equals(java.sql.Date.class)) {
-				values.put(ata.name, ((java.sql.Date)value).getTime());
-			} else if ((value.equals(Double.class))
-					|| (value.equals(Double.TYPE))) {
-				values.put(ata.name, (Double) value);
-			} else if ((value.equals(Float.class))
-					|| (value.equals(Float.TYPE))) {
-				values.put(ata.name, (Float) value);
-			} else if ((value.getClass().equals(Integer.class))
-					|| (value.getClass().equals(Integer.TYPE))) {
-				values.put(ata.name, (Integer) value);
-			} else if ((value.getClass().equals(Long.class))
-					|| (value.getClass().equals(Long.TYPE))) {
-				values.put(ata.name, (Long) value);
-			} else if ((value.getClass().equals(String.class))
-					|| (value.getClass().equals(Character.TYPE))) {
-				values.put(ata.name, value.toString());
-			} 
+			result = db.update(Util.getTableName(model.getClass()), values, whereClause, whereArgs);
+			this.mDatabaseManager.close();
 		}
-		long result = db.update(Util.getTableName(model.getClass()), values, whereClause, whereArgs);
-		this.mDatabaseManager.close();
 		return result;
 	}
 	/**
@@ -213,11 +224,14 @@ public class DefaultDAO {
 	 * @return
 	 */
 	public List<?> select(Class<?> model,boolean distinct, String selection,String[] selectionArgs,String groupBy,String having, String order, String limit){
-		SQLiteDatabase db = this.mDatabaseManager.open();
-		Cursor cursor = db.query(distinct, Util.getTableName(model), null, selection, selectionArgs, groupBy, having, order, limit);
-		List<Object> list = Util.processCursor(mContext,model,cursor);
-		cursor.close();
-		db.close();
+		List<Object> list = null;			
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();		
+			Cursor cursor = db.query(distinct, Util.getTableName(model), null, selection, selectionArgs, groupBy, having, order, limit);
+			list = Util.processCursor(mContext,model,cursor);
+			cursor.close();
+			db.close();
+		}
 		return list;
 	}
 	
