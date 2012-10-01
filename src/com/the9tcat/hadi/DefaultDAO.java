@@ -14,15 +14,14 @@ public class DefaultDAO {
 	private DatabaseManager mDatabaseManager;
 	private HadiApplication mApplication;
 	private Context mContext;
-	private static boolean SHOW_LOG = false;
+	private static boolean SHOW_LOG = true;
 	public static String Lock = "dblock";
 	
 	public DefaultDAO(Context context){
 		this.mApplication = ((HadiApplication)context.getApplicationContext());
 		this.mDatabaseManager = mApplication.getDataBaseManager();
-		this.mContext = context;
-		
-		SHOW_LOG = true;
+		this.mContext = context;		
+		//SHOW_LOG = true;
 	}
 	
 	/**
@@ -280,7 +279,7 @@ public class DefaultDAO {
 		long result = db.insert(Util.getTableName(model.getClass()), null, values);
 		
 		if(SHOW_LOG)
-			Log.i(LogParams.LOGGING_TAG, "Created Model: " + Util.dumpToString(model));
+			Log.i(LogParams.LOGGING_TAG, "Creating Model: " + Util.dumpToString(model));
 		
 		return result;
 	}
