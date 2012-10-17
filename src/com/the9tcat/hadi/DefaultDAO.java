@@ -21,7 +21,6 @@ public class DefaultDAO {
 		this.mApplication = ((HadiApplication)context.getApplicationContext());
 		this.mDatabaseManager = mApplication.getDataBaseManager();
 		this.mContext = context;		
-		//SHOW_LOG = true;
 	}
 	
 	/**
