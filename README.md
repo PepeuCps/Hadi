@@ -9,7 +9,7 @@ It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](ht
 
 # How to use
 
-1. Import Hadi library **(hadi_sdk.jar)** into your Android project. (For now download here the binary: [hadi_sdk.jar](http://sourceforge.net/projects/hadi/files/)).
+1. Import Hadi library **(hadi_sdk.jar)** into your Android project. (For now send a e-mail to hadiormdev@gmail.com to get the last build).
 If you are using Eclipse, add the lib to the build path.
 
 2. Edit your **AndroidManifest.xml**
@@ -69,7 +69,7 @@ Define your database name and version under element Application, it looks like t
 		/** for delete */
 		dao.delete_by_primary(b1);		
 
-5. You could find all the example codes from demo project.
+5. You could find all the example codes from demo project or if you have any quaestions send a e-mail to hadiormdev@gmail.com.
 
 # Hadi (Portuguese Version)
 
@@ -82,7 +82,7 @@ Este projeto foi criado originalmente por The9tCat [http://sourceforge.net/users
 
 # Como Usar
 
-1. Importe a biblioteca do Hadi **(hadi_sdk.jar)** para dentro do seu projeto Android. (Por enquanto faça o download da lib aqui: ([hadi__sdk.jar](http://sourceforge.net/projects/hadi/files/))
+1. Importe a biblioteca do Hadi **(hadi_sdk.jar)** para dentro do seu projeto Android. (Se Por enquanto mande um e-mail para hadiormdev@gmail.com e receba a última build)
 Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".
 
 2. Edite seu **AndroidManifest.xml**
@@ -143,4 +143,4 @@ Defina o nome da sua base de dados e a versão (dentro da tag  Application). Alg
 		/** para apagar os dados */
 		dao.delete_by_primary(b1);		
 
-5. Você pode achar mais exemplo nos projeto de demonstração.
+5. Você pode achar mais exemplo nos projeto de demonstração ou qualquer dúvida enviar um e-mail para hadiormdev@gmail.com.
