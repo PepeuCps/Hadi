@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -95,7 +96,7 @@ public class DefaultDAO {
 	
 	/**
 	 * 
-	 * @param models the data that you want to add to database
+	 * @param model the data that you want to add to database
 	 * @return
 	 */
 	public long delete_by_primary(Object model) {
@@ -232,6 +233,26 @@ public class DefaultDAO {
 			db.close();
 		}
 		return list;
+	}
+	/**
+	 *
+	 * @param model The Class that you want to selected
+	 * @param selection A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself). Passing null will return all rows for the given table.
+	 * @param selectionArgs You may include ?s in selection, which will be replaced by the values from selectionArgs, in order that they appear in the selection. The values will be bound as Strings.
+	 * @return
+	 */
+	public long count(Class<?> model, String selection,String[] selectionArgs){
+		long count = 0;
+		synchronized(Lock) {
+			SQLiteDatabase db = this.mDatabaseManager.open();
+            String whereClause = selection != null ? " where " + selection: "";
+            Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + Util.getTableName(model) + whereClause, selectionArgs);
+            cursor.moveToFirst();
+            count = cursor.getInt(0);
+            cursor.close();
+			db.close();
+		}
+		return count;
 	}
 	
 	private long insertModel(SQLiteDatabase db,Object model){
