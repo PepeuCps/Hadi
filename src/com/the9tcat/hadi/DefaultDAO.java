@@ -6,7 +6,6 @@ import java.util.List;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -104,13 +103,13 @@ public class DefaultDAO {
 		List<String> whereArgs = new ArrayList<String>();
 		for(ColumnAttribute ata:atas){
 			if(ata.primary){
-				whereClause = whereClause + "and "+ata.name+" = ?";
+				whereClause = whereClause + " and "+ata.name+" = ?";
 				try {
 					whereArgs.add(ata.field.get(model).toString());
 				} catch (IllegalArgumentException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "delete_by_primary : " , e);
 				} catch (IllegalAccessException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "delete_by_primary : " , e);
 				}
 			}
 		}
@@ -136,9 +135,9 @@ public class DefaultDAO {
 				try {
 					whereArgs.add(ata.field.get(model).toString());
 				} catch (IllegalArgumentException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "update_by_primary : " , e);
 				} catch (IllegalAccessException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "update_by_primary : " , e);
 				}
 			}else{
 				columns.add(ata.name);
@@ -177,9 +176,9 @@ public class DefaultDAO {
 				try {
 					value = ata.field.get(model);
 				} catch (IllegalArgumentException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "update : " , e);
 				} catch (IllegalAccessException e) {
-					Log.e(LogParams.LOGGING_TAG, e.getMessage());
+					Log.e(LogParams.LOGGING_TAG, "update : " , e);
 				}
 				if ((value.getClass().equals(Boolean.class))
 						|| (value.getClass().equals(Boolean.TYPE))) {
@@ -265,7 +264,7 @@ public class DefaultDAO {
 					continue;
 				}
 			} catch(Exception e){
-				Log.e(LogParams.LOGGING_TAG, e.getMessage());
+				Log.e(LogParams.LOGGING_TAG, "insertModel : " , e);
 			}
 			if (value == null) {
 				continue;
