@@ -5,18 +5,17 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteException;
-import com.the9tcat.hadi.annotation.Table;
-
-import dalvik.system.DexFile;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+
+import com.the9tcat.hadi.annotation.Table;
+
+import dalvik.system.DexFile;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 	private static final String Hadi_DB_NAME = "Hadi_DB_NAME";
@@ -105,7 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         StringBuffer sb;
         for (Class<?> table : tables) {
             try {
-                Cursor cursor = db.query(false, Util.getTableName(table), null, null, null, null, null, null, null);
+                db.query(false, Util.getTableName(table), null, null, null, null, null, null, null);
             }
             catch (SQLiteException e){
                 List<ColumnAttribute> columns = Util.getTableColumn(((HadiApplication)mContext.getApplicationContext()),
