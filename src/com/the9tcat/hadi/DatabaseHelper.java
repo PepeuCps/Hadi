@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteException;
 import com.the9tcat.hadi.annotation.Table;
 
 import dalvik.system.DexFile;
@@ -24,9 +26,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	public DatabaseHelper(Context context) {
 		super(context, getDBName(context), null, getDBVersion(context));
 		this.mContext = context;
+        scanTables(getWritableDatabase());
 	}
 
-	@Override
+
+    @Override
 	public void onCreate(SQLiteDatabase db) {
 
 		ArrayList<Class<?>> tables = getEntityClasses(mContext);
@@ -92,6 +96,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 		}
 		onCreate(db);
 	}
+
+    private void scanTables(SQLiteDatabase db) {
+        ArrayList<Class<?>> tables = getEntityClasses(mContext);
+
+        Log.i(LogParams.LOGGING_TAG, "Creating " + tables.size() + " tables");
+        List<String> primarys = new ArrayList<String>();
+        StringBuffer sb;
+        for (Class<?> table : tables) {
+            try {
+                Cursor cursor = db.query(false, Util.getTableName(table), null, null, null, null, null, null, null);
+            }
+            catch (SQLiteException e){
+                List<ColumnAttribute> columns = Util.getTableColumn(((HadiApplication)mContext.getApplicationContext()),
+                        table);
+                if(columns.size()==0){
+                    continue;
+                }
+                sb = new StringBuffer();
+                primarys.clear();
+                boolean find_increment = false;
+                for (ColumnAttribute column : columns) {
+                    if(column.primary){
+                        primarys.add(column.name);
+                    }
+                    sb.append(column.name);
+                    sb.append(" ");
+                    sb.append(column.type);
+                    if(column.autoincrement){
+                        find_increment = true;
+                        sb.append(" PRIMARY KEY AUTOINCREMENT");
+                    }else{
+                        if(column.length>0){
+                            sb.append("(");
+                            sb.append(column.length);
+                            sb.append(")");
+                        }
+                        if(column.default_value!=null){
+                            sb.append(" default "+column.default_value);
+                        }
+                    }
+                    sb.append(" , ");
+                }
+                if(primarys.size()>0&&!find_increment){
+                    String pms = "";
+                    for(String pm:primarys){
+                        pms = pms + pm +",";
+                    }
+                    sb.append(" PRIMARY KEY ("+pms.substring(0,pms.length()-1)+") , ");
+                }
+                String sql ="CREATE TABLE "+Util.getTableName(table)+" ("+sb.toString().substring(0,sb.length()-2)+" )";
+
+                Log.i(LogParams.LOGGING_TAG, sql);
+
+                db.execSQL(sql);
+            }
+        }
+    }
 
 	private static ArrayList<Class<?>> getEntityClasses(Context context) {
 		ArrayList<Class<?>> entityClasses = new ArrayList<Class<?>>();
