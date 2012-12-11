@@ -28,7 +28,7 @@ public class Util {
 			}
 		}
 		atas = new ArrayList<ColumnAttribute>();
-		Field[] fields = object.getDeclaredFields();
+		Field[] fields = object.getFields();
 		Column tmp_c;
 		for (Field field : fields) {
 			tmp_c  = field.getAnnotation(Column.class);
