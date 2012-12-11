@@ -52,7 +52,7 @@ public class Util {
                 if (!tmp_c.default_value().equals("null")) {
                     ata.default_value = null;
                 }
-                if ((ata.name.equals("_id") || ata.name.equals("id")) && ata.length > 0 && ata.autoincrement != false) {
+                if ((ata.name.equals("_id") || ata.name.equals("id")) && ata.length > 0 && tmp_c.autoincrement() != false) {
                     ata.autoincrement = true;
                     ata.primary = true;
                 } else {
