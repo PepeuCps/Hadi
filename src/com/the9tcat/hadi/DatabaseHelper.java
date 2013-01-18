@@ -1,21 +1,21 @@
 package com.the9tcat.hadi;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import com.the9tcat.hadi.annotation.Table;
-
 import dalvik.system.DexFile;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String Hadi_DB_NAME = "Hadi_DB_NAME";
@@ -104,10 +104,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         StringBuffer sb;
         for (Class<?> table : tables) {
             try {
-                db.query(false, Util.getTableName(table), null, null, null, null, null, null, null);
+                String tableName = Util.getTableName(table);
+                Cursor c = db.query(false, tableName, null, null, null, null, null, null, null);
+                //all old Columns Names
+                List<String> oldColumns = Arrays.asList(c.getColumnNames());
+                //all new Columns
+                List<ColumnAttribute> newColumns = Util.getTableColumn(((HadiApplication) mContext.getApplicationContext()),table);
+                //all new Columns names
+                List<String> newColumnsNames = new ArrayList<String>();
+                StringBuffer sb1 = new StringBuffer();
+                for (ColumnAttribute col : newColumns){
+                    if(!oldColumns.contains(col.name)){
+                        sb1.append(col.name);
+                        sb1.append(" ");
+                        sb1.append(col.type);
+                        if (col.length > 0) {
+                            sb1.append("(");
+                            sb1.append(col.length);
+                            sb1.append(")");
+                        }
+                        if (col.default_value != null) {
+                            sb1.append(" default " + col.default_value);
+                        }
+                        sb1.append(" , ");
+                    }
+                }
+                if(sb1.length()>0){
+                    String sqlAlter = "ALTER TABLE " + tableName + " ADD COLUMN " + sb1.toString().substring(0, sb1.length() - 2) + ";";
+                    Log.i(LogParams.LOGGING_TAG, sqlAlter);
+                    db.execSQL(sqlAlter);
+                }
+
             } catch (SQLiteException e) {
                 List<ColumnAttribute> columns = Util.getTableColumn(((HadiApplication) mContext.getApplicationContext()),
-                        table);
+table);
                 if (columns.size() == 0) {
                     continue;
                 }
