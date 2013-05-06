@@ -109,12 +109,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 //all old Columns Names
                 List<String> oldColumns = Arrays.asList(c.getColumnNames());
                 //all new Columns
-                List<ColumnAttribute> newColumns = Util.getTableColumn(((HadiApplication) mContext.getApplicationContext()),table);
+                List<ColumnAttribute> newColumns = Util.getTableColumn(((HadiApplication) mContext.getApplicationContext()), table);
                 //all new Columns names
                 List<String> newColumnsNames = new ArrayList<String>();
                 StringBuffer sb1 = new StringBuffer();
-                for (ColumnAttribute col : newColumns){
-                    if(!oldColumns.contains(col.name)){
+                for (ColumnAttribute col : newColumns) {
+                    if (!oldColumns.contains(col.name)) {
                         sb1.append(col.name);
                         sb1.append(" ");
                         sb1.append(col.type);
@@ -126,18 +126,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         if (col.default_value != null) {
                             sb1.append(" default " + col.default_value);
                         }
-                        sb1.append(" , ");
+                        String sqlAlter = "ALTER TABLE " + tableName + " ADD COLUMN " + sb1.toString() + ";";
+                        Log.i(LogParams.LOGGING_TAG, sqlAlter);
+                        db.execSQL(sqlAlter);
+                        sb1 = new StringBuffer();
                     }
-                }
-                if(sb1.length()>0){
-                    String sqlAlter = "ALTER TABLE " + tableName + " ADD COLUMN " + sb1.toString().substring(0, sb1.length() - 2) + ";";
-                    Log.i(LogParams.LOGGING_TAG, sqlAlter);
-                    db.execSQL(sqlAlter);
                 }
 
             } catch (SQLiteException e) {
                 List<ColumnAttribute> columns = Util.getTableColumn(((HadiApplication) mContext.getApplicationContext()),
-table);
+                        table);
                 if (columns.size() == 0) {
                     continue;
                 }
