@@ -1,13 +1,13 @@
 package com.the9tcat.hadi;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultDAO {
 
@@ -180,7 +180,10 @@ public class DefaultDAO {
 				} catch (IllegalAccessException e) {
 					Log.e(LogParams.LOGGING_TAG, "update : " , e);
 				}
-				if ((value.getClass().equals(Boolean.class))
+                if (value == null){
+                    values.put(ata.name, (String) null);
+                }
+				else if ((value.getClass().equals(Boolean.class))
 						|| (value.getClass().equals(Boolean.TYPE))) {
 					values.put(ata.name, (Boolean) value);
 				} else if (value.equals(java.util.Date.class)) {

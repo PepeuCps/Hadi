@@ -55,6 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 if (column.autoincrement) {
                     find_increment = true;
                     sb.append(" PRIMARY KEY AUTOINCREMENT");
+                    primarys.add(column.name);
                 } else {
                     if (column.length > 0) {
                         sb.append("(");
@@ -152,6 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     if (column.autoincrement) {
                         find_increment = true;
                         sb.append(" PRIMARY KEY AUTOINCREMENT");
+                        primarys.add(column.name);
                     } else {
                         if (column.length > 0) {
                             sb.append("(");
