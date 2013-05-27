@@ -3,11 +3,13 @@ package com.the9tcat.hadi;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import com.sun.deploy.util.ArrayUtil;
 import com.the9tcat.hadi.annotation.Column;
 import com.the9tcat.hadi.annotation.Table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Util {
@@ -27,14 +29,22 @@ public class Util {
         }
         atas = new ArrayList<ColumnAttribute>();
         Field[] fields = object.getDeclaredFields();
+
         if (fields.length == 0) {
             fields = object.getFields();
         }
-        if (fields.length == 0) {
-            fields = object.getSuperclass().getDeclaredFields();
+
+        List<Field> list = Arrays.asList(fields);
+
+        if(object.getSuperclass()!=null){
+            Field[] superFields = object.getSuperclass().getDeclaredFields();
+            if(superFields.length>0){
+                list.addAll(Arrays.asList(superFields));
+            }
         }
+
         Column tmp_c;
-        for (Field field : fields) {
+        for (Field field : list) {
             tmp_c = field.getAnnotation(Column.class);
             if (tmp_c != null) {
                 ColumnAttribute ata = new ColumnAttribute();
