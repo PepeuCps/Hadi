@@ -34,12 +34,13 @@ public class Util {
             fields = object.getFields();
         }
 
-        List<Field> list = Arrays.asList(fields);
+        List<Field> list = new ArrayList(Arrays.asList(fields));
 
         if(object.getSuperclass()!=null){
             Field[] superFields = object.getSuperclass().getDeclaredFields();
             if(superFields.length>0){
-                list.addAll(Arrays.asList(superFields));
+                List<Field> list1 = new ArrayList(Arrays.asList(superFields));
+                list.addAll(list1);
             }
         }
 
