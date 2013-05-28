@@ -28,24 +28,10 @@ public class Util {
             }
         }
         atas = new ArrayList<ColumnAttribute>();
-        Field[] fields = object.getDeclaredFields();
-
-        if (fields.length == 0) {
-            fields = object.getFields();
-        }
-
-        List<Field> list = new ArrayList(Arrays.asList(fields));
-
-        if(object.getSuperclass()!=null){
-            Field[] superFields = object.getSuperclass().getDeclaredFields();
-            if(superFields.length>0){
-                List<Field> list1 = new ArrayList(Arrays.asList(superFields));
-                list.addAll(list1);
-            }
-        }
+        List<Field> fields = getFieldsFromObject(object);
 
         Column tmp_c;
-        for (Field field : list) {
+        for (Field field : fields) {
             tmp_c = field.getAnnotation(Column.class);
             if (tmp_c != null) {
                 ColumnAttribute ata = new ColumnAttribute();
@@ -113,7 +99,7 @@ public class Util {
     }
 
     public final static void loadModel(Class<?> object, Cursor cursor, Object model) {
-        Field[] fields = object.getDeclaredFields();
+        List<Field> fields = getFieldsFromObject(object);
         Column tmp_c;
         for (Field field : fields) {
             tmp_c = field.getAnnotation(Column.class);
@@ -280,5 +266,25 @@ public class Util {
 
         sb.append('}');
         return sb.toString();
+    }
+
+
+    public static List<Field> getFieldsFromObject(Class<?> object){
+        Field[] fields = object.getDeclaredFields();
+
+        if (fields.length == 0) {
+            fields = object.getFields();
+        }
+
+        List<Field> list = new ArrayList(Arrays.asList(fields));
+
+        if(object.getSuperclass()!=null){
+            Field[] superFields = object.getSuperclass().getDeclaredFields();
+            if(superFields.length>0){
+                List<Field> list1 = new ArrayList(Arrays.asList(superFields));
+                list.addAll(list1);
+            }
+        }
+        return list;
     }
 }
