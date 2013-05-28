@@ -4,3 +4,4 @@ bin
 out/
 META-INF/
 dist
+.DS_Store

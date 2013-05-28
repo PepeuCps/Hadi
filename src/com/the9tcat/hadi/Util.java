@@ -3,11 +3,13 @@ package com.the9tcat.hadi;
 import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
+import com.sun.deploy.util.ArrayUtil;
 import com.the9tcat.hadi.annotation.Column;
 import com.the9tcat.hadi.annotation.Table;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Util {
@@ -26,13 +28,8 @@ public class Util {
             }
         }
         atas = new ArrayList<ColumnAttribute>();
-        Field[] fields = object.getDeclaredFields();
-        if (fields.length == 0) {
-            fields = object.getFields();
-        }
-        if (fields.length == 0) {
-            fields = object.getSuperclass().getDeclaredFields();
-        }
+        List<Field> fields = getFieldsFromObject(object);
+
         Column tmp_c;
         for (Field field : fields) {
             tmp_c = field.getAnnotation(Column.class);
@@ -102,7 +99,7 @@ public class Util {
     }
 
     public final static void loadModel(Class<?> object, Cursor cursor, Object model) {
-        Field[] fields = object.getDeclaredFields();
+        List<Field> fields = getFieldsFromObject(object);
         Column tmp_c;
         for (Field field : fields) {
             tmp_c = field.getAnnotation(Column.class);
@@ -269,5 +266,25 @@ public class Util {
 
         sb.append('}');
         return sb.toString();
+    }
+
+
+    public static List<Field> getFieldsFromObject(Class<?> object){
+        Field[] fields = object.getDeclaredFields();
+
+        if (fields.length == 0) {
+            fields = object.getFields();
+        }
+
+        List<Field> list = new ArrayList(Arrays.asList(fields));
+
+        if(object.getSuperclass()!=null){
+            Field[] superFields = object.getSuperclass().getDeclaredFields();
+            if(superFields.length>0){
+                List<Field> list1 = new ArrayList(Arrays.asList(superFields));
+                list.addAll(list1);
+            }
+        }
+        return list;
     }
 }
