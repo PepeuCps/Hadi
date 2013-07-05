@@ -1,16 +1,16 @@
 package com.the9tcat.hadi;
 
-import android.content.Context;
-import android.database.Cursor;
-import android.util.Log;
-import com.sun.deploy.util.ArrayUtil;
-import com.the9tcat.hadi.annotation.Column;
-import com.the9tcat.hadi.annotation.Table;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import android.content.Context;
+import android.database.Cursor;
+import android.util.Log;
+
+import com.the9tcat.hadi.annotation.Column;
+import com.the9tcat.hadi.annotation.Table;
 
 public class Util {
     /**
