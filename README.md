@@ -1,15 +1,13 @@
 # Hadi (English Version)
 
 **Hadi** is an Android ORM Framework. It makes SQLite using in Android easy and simple. 
-Hadi is and open source project. You can use it free, change it and even re-publish it.
-
-This project was imported from SourceForge. [http://hadi.sourceforge.net/](http://hadi.sourceforge.net/)
+Hadi is and open source project.
 
 It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](http://sourceforge.net/users/the9tcat)
 
 # How to use
 
-1. Import Hadi library **(hadi_sdk.jar)** into your Android project. (For now send a e-mail to hadiormdev@gmail.com to get the last build).
+1. Import Hadi library **(hadi*.jar)** into your Android project. (See the last build/binary in DIST folder).
 If you are using Eclipse, add the lib to the build path.
 
 2. Edit your **AndroidManifest.xml**
@@ -74,15 +72,13 @@ Define your database name and version under element Application, it looks like t
 # Hadi (Portuguese Version)
 
 **Hadi** é um framework ORM para Android. Ele faz o SQLite ficar fácil de usar. 
-O Hadi é um projeto open source, por isso você pode usa-lo livremente, altera-lo e republica-lo. Participe do nosso projeto e contribua.
-
-Este projeto foi importado originalmente do SourceForge. [http://hadi.sourceforge.net/](http://hadi.sourceforge.net/)
+O Hadi é um projeto open source. Participe do nosso projeto e contribua.
 
 Este projeto foi criado originalmente por The9tCat [http://sourceforge.net/users/the9tcat](http://sourceforge.net/users/the9tcat)
 
 # Como Usar
 
-1. Importe a biblioteca do Hadi **(hadi_sdk.jar)** para dentro do seu projeto Android. (Se Por enquanto mande um e-mail para hadiormdev@gmail.com e receba a última build)
+1. Importe a biblioteca do Hadi **(hadi*.jar)** para dentro do seu projeto Android. (Veja a última build na pasta DIST)
 Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".
 
 2. Edite seu **AndroidManifest.xml**
