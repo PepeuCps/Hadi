@@ -26,7 +26,7 @@ public class DefaultDAO {
 	/**
 	 * 
 	 * @param model the model that you want to save to database
-	 * @return
+	 * @return the row ID of the newly inserted row, or -1 if an error occurred
 	 */
 	public long insert(Object model) {
 		long result = 0;
@@ -46,7 +46,7 @@ public class DefaultDAO {
 	/**
 	 * 
 	 * @param models the data that you want to add to database
-	 * @return
+	 * @return the number of inserted rows
 	 */
 	public long insert_list(List<?> models) {
 		long result = 0;
@@ -77,7 +77,7 @@ public class DefaultDAO {
 	/**
 	 * 
 	 * @param model the model that you want to save to database
-	 * @return
+	 * @return the number of rows affected
 	 */
 	public long delete(Class<?> model,String whereClause,String[] whereArgs) {
 		long result = 0;
@@ -95,7 +95,7 @@ public class DefaultDAO {
 	/**
 	 * 
 	 * @param model the data that you want to add to database
-	 * @return
+	 * @return the number of rows affected
 	 */
 	public long delete_by_primary(Object model) {
 		List<ColumnAttribute> atas = Util.getTableColumn(mApplication, (Class<?>)model.getClass());
@@ -122,7 +122,7 @@ public class DefaultDAO {
 	/**
 	 * 
 	 * @param model update by primary key, please make sure your class has primary key
-	 * @return
+	 * @return the number of rows affected
 	 */
 	public long update_by_primary(Object model){
 		List<ColumnAttribute> atas = Util.getTableColumn(mApplication, (Class<?>)model.getClass());
@@ -154,7 +154,7 @@ public class DefaultDAO {
 	 * @param columns columns that you want to changed
 	 * @param whereClause the optional WHERE clause to apply when updating. Passing null will update all rows.
 	 * @param whereArgs
-	 * @return
+	 * @return the number of rows affected
 	 */
 	public long update(Object model,String[] columns,String whereClause,String[] whereArgs){
 		long result = 0;
@@ -180,30 +180,23 @@ public class DefaultDAO {
 				} catch (IllegalAccessException e) {
 					Log.e(LogParams.LOGGING_TAG, "update : " , e);
 				}
-                if (value == null){
+                if (value == null) {
                     values.put(ata.name, (String) null);
-                }
-				else if ((value.getClass().equals(Boolean.class))
-						|| (value.getClass().equals(Boolean.TYPE))) {
+                } else if ((value.getClass().equals(Boolean.class)) || (value.getClass().equals(Boolean.TYPE))) {
 					values.put(ata.name, (Boolean) value);
-				} else if (value.equals(java.util.Date.class)) {
+				} else if (value.getClass().equals(java.util.Date.class)) {
 					values.put(ata.name, ((java.util.Date)value).getTime());
-				} else if (value.equals(java.sql.Date.class)) {
+				} else if (value.getClass().equals(java.sql.Date.class)) {
 					values.put(ata.name, ((java.sql.Date)value).getTime());
-				} else if ((value.equals(Double.class))
-						|| (value.equals(Double.TYPE))) {
+				} else if ((value.getClass().equals(Double.class)) || (value.getClass().equals(Double.TYPE))) {
 					values.put(ata.name, (Double) value);
-				} else if ((value.equals(Float.class))
-						|| (value.equals(Float.TYPE))) {
+				} else if ((value.getClass().equals(Float.class)) || (value.getClass().equals(Float.TYPE))) {
 					values.put(ata.name, (Float) value);
-				} else if ((value.getClass().equals(Integer.class))
-						|| (value.getClass().equals(Integer.TYPE))) {
+				} else if ((value.getClass().equals(Integer.class))	|| (value.getClass().equals(Integer.TYPE))) {
 					values.put(ata.name, (Integer) value);
-				} else if ((value.getClass().equals(Long.class))
-						|| (value.getClass().equals(Long.TYPE))) {
+				} else if ((value.getClass().equals(Long.class)) || (value.getClass().equals(Long.TYPE))) {
 					values.put(ata.name, (Long) value);
-				} else if ((value.getClass().equals(String.class))
-						|| (value.getClass().equals(Character.TYPE))) {
+				} else if ((value.getClass().equals(String.class)) || (value.getClass().equals(Character.TYPE))) {
 					values.put(ata.name, value.toString());
 				} 
 			}
@@ -222,7 +215,7 @@ public class DefaultDAO {
 	 * @param having A filter declare which row groups to include in the cursor, if row grouping is being used, formatted as an SQL HAVING clause (excluding the HAVING itself). Passing null will cause all row groups to be included, and is required when row grouping is not being used.
 	 * @param order How to order the rows, formatted as an SQL ORDER BY clause (excluding the ORDER BY itself). Passing null will use the default sort order, which may be unordered.
 	 * @param limit Limits the number of rows returned by the query, formatted as LIMIT clause. Passing null denotes no LIMIT clause
-	 * @return
+	 * @return list of objects
 	 */
 	public List<?> select(Class<?> model,boolean distinct, String selection,String[] selectionArgs,String groupBy,String having, String order, String limit){
 		List<Object> list = null;			
@@ -240,7 +233,7 @@ public class DefaultDAO {
 	 * @param model The Class that you want to selected
 	 * @param selection A filter declaring which rows to return, formatted as an SQL WHERE clause (excluding the WHERE itself). Passing null will return all rows for the given table.
 	 * @param selectionArgs You may include ?s in selection, which will be replaced by the values from selectionArgs, in order that they appear in the selection. The values will be bound as Strings.
-	 * @return
+	 * @return the count of data
 	 */
 	public long count(Class<?> model, String selection,String[] selectionArgs){
 		long count = 0;
@@ -273,27 +266,21 @@ public class DefaultDAO {
 				continue;
 			}
 			
-			if ((value.getClass().equals(Boolean.class))
-					|| (value.getClass().equals(Boolean.TYPE))) {
+			if ((value.getClass().equals(Boolean.class)) || (value.getClass().equals(Boolean.TYPE))) {
 				values.put(ata.name, (Boolean) value);
-			} else if (value.equals(java.util.Date.class)) {
+			} else if (value.getClass().equals(java.util.Date.class)) {
 				values.put(ata.name, ((java.util.Date)value).getTime());
-			} else if (value.equals(java.sql.Date.class)) {
+			} else if (value.getClass().equals(java.sql.Date.class)) {
 				values.put(ata.name, ((java.sql.Date)value).getTime());
-			} else if ((value.equals(Double.class))
-					|| (value.equals(Double.TYPE))) {
+			} else if ((value.getClass().equals(Double.class)) || (value.getClass().equals(Double.TYPE))) {
 				values.put(ata.name, (Double) value);
-			} else if ((value.equals(Float.class))
-					|| (value.equals(Float.TYPE))) {
+			} else if ((value.getClass().equals(Float.class)) || (value.equals(Float.TYPE))) {
 				values.put(ata.name, (Float) value);
-			} else if ((value.getClass().equals(Integer.class))
-					|| (value.getClass().equals(Integer.TYPE))) {
+			} else if ((value.getClass().equals(Integer.class)) || (value.getClass().equals(Integer.TYPE))) {
 				values.put(ata.name, (Integer) value);
-			} else if ((value.getClass().equals(Long.class))
-					|| (value.getClass().equals(Long.TYPE))) {
+			} else if ((value.getClass().equals(Long.class)) || (value.getClass().equals(Long.TYPE))) {
 				values.put(ata.name, (Long) value);
-			} else if ((value.getClass().equals(String.class))
-					|| (value.getClass().equals(Character.TYPE))) {
+			} else if ((value.getClass().equals(String.class)) || (value.getClass().equals(Character.TYPE))) {
 				values.put(ata.name, value.toString());
 			} 
 		}
