@@ -115,7 +115,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 List<String> newColumnsNames = new ArrayList<String>();
                 StringBuffer sb1 = new StringBuffer();
                 for (ColumnAttribute col : newColumns) {
-                    if (!oldColumns.contains(col.name)) {
+                    //Log.i(LogParams.LOGGING_TAG, "Existing columns: " + oldColumns.toString());
+                    //Log.i(LogParams.LOGGING_TAG, "Column exists? " + col.name);
+                    if (!oldColumns.contains(col.name.replace("[","").replace("]",""))) {
                         sb1.append(col.name);
                         sb1.append(" ");
                         sb1.append(col.type);
