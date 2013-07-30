@@ -7,7 +7,7 @@ It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](ht
 
 # How to use
 
-1. Import Hadi library **(hadi*.jar)** into your Android project. (See the last build/binary in [https://github.com/PepeuCps/Hadi/releases]).
+1. Import Hadi library **(hadi*.jar)** into your Android project. (See the last build/binary in [https://github.com/PepeuCps/Hadi/releases](https://github.com/PepeuCps/Hadi/releases)).
 If you are using Eclipse, add the lib to the build path.
 
 2. Edit your **AndroidManifest.xml**
@@ -78,7 +78,7 @@ Este projeto foi criado originalmente por The9tCat [http://sourceforge.net/users
 
 # Como Usar
 
-1. Importe a biblioteca do Hadi **(hadi*.jar)** para dentro do seu projeto Android. (Veja a última build em [https://github.com/PepeuCps/Hadi/releases])
+1. Importe a biblioteca do Hadi **(hadi*.jar)** para dentro do seu projeto Android. (Veja a última build em [https://github.com/PepeuCps/Hadi/releases](https://github.com/PepeuCps/Hadi/releases))
 Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".
 
 2. Edite seu **AndroidManifest.xml**
