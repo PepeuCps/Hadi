@@ -7,6 +7,8 @@ It was originally created by The9tCat [http://sourceforge.net/users/the9tcat](ht
 
 # How to use
 
+Examples project: [https://github.com/PepeuCps/HadiExamples](https://github.com/PepeuCps/HadiExamples)
+
 1. Import Hadi library **(hadi*.jar)** into your Android project. (See the last build/binary in [https://github.com/PepeuCps/Hadi/releases](https://github.com/PepeuCps/Hadi/releases)).
 If you are using Eclipse, add the lib to the build path.
 
@@ -77,6 +79,8 @@ O Hadi é um projeto open source. Participe do nosso projeto e contribua.
 Este projeto foi criado originalmente por The9tCat [http://sourceforge.net/users/the9tcat](http://sourceforge.net/users/the9tcat)
 
 # Como Usar
+
+Projeto com exemplos: [https://github.com/PepeuCps/HadiExamples](https://github.com/PepeuCps/HadiExamples)
 
 1. Importe a biblioteca do Hadi **(hadi*.jar)** para dentro do seu projeto Android. (Veja a última build em [https://github.com/PepeuCps/Hadi/releases](https://github.com/PepeuCps/Hadi/releases))
 Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".
