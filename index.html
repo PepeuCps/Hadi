@@ -1,51 +1,62 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Hadi : Hadi is an Android ORM Framework. It makes SQLite using in Android easy and simple. Hadi is open source project, you can use it free, change it." />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Hadi by PepeuCps</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Hadi</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/PepeuCps/Hadi">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/PepeuCps/Hadi/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/PepeuCps/Hadi/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/PepeuCps/Hadi">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Hadi</h1>
-          <h2 id="project_tagline">Hadi is an Android ORM Framework. It makes SQLite using in Android easy and simple. Hadi is open source project, you can use it free, change it.</h2>
+      <section>
+        <div id="title">
+          <h1>Hadi</h1>
+          <p>Hadi is an Android ORM Framework. It makes SQLite using in Android easy and simple. Hadi is open source project, you can use it free, change it.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/PepeuCps">PepeuCps</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/PepeuCps/Hadi/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/PepeuCps/Hadi/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Hadi (English Version)</h1>
+        <h1>
+<a name="hadi-english-version" class="anchor" href="#hadi-english-version"><span class="octicon octicon-link"></span></a>Hadi (English Version)</h1>
 
 <p><strong>Hadi</strong> is an Android ORM Framework. It makes SQLite using in Android easy and simple. 
-Hadi is and open source project. You can use it free, change it and even re-publish it.</p>
-
-<p>This project was imported from SourceForge. <a href="http://hadi.sourceforge.net/">http://hadi.sourceforge.net/</a></p>
+Hadi is and open source project. You can use it free.</p>
 
 <p>It was originally created by The9tCat <a href="http://sourceforge.net/users/the9tcat">http://sourceforge.net/users/the9tcat</a></p>
 
-<h1>How to use</h1>
+<h1>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h1>
 
 <ol>
-<li><p>Import Hadi library <strong>(hadi_sdk.jar)</strong> into your Android project. (For now download here the binary: <a href="http://sourceforge.net/projects/hadi/files/">hadi_sdk.jar</a>).
-If you are using Eclipse, add the lib to the build path.</p></li>
-<li><p>Edit your <strong>AndroidManifest.xml</strong></p></li>
+<li>Import Hadi library <strong>(hadi-*.jar)</strong> into your Android project. Download last release at: <a href="https://github.com/PepeuCps/Hadi/releases">https://github.com/PepeuCps/Hadi/releases</a>
+</li>
+</ol><p>If you are using Eclipse, add the lib to the build path.</p>
+
+<ol>
+<li>Edit your <strong>AndroidManifest.xml</strong>
+</li>
 </ol><p>Add attribute "android:name" into element application, it looks like this:</p>
 
 <pre><code>    &lt;application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name"&gt;
@@ -108,21 +119,25 @@ dao.delete_by_primary(b1);
 </code></pre>
 </li>
 <li><p>You could find all the example codes from demo project.</p></li>
-</ol><h1>Hadi (Portuguese Version)</h1>
+</ol><h1>
+<a name="hadi-portuguese-version" class="anchor" href="#hadi-portuguese-version"><span class="octicon octicon-link"></span></a>Hadi (Portuguese Version)</h1>
 
 <p><strong>Hadi</strong> é um framework ORM para Android. Ele faz o SQLite ficar fácil de usar. 
 O Hadi é um projeto open source, por isso você pode usa-lo livremente, altera-lo e republica-lo. Participe do nosso projeto e contribua.</p>
 
-<p>Este projeto foi importado originalmente do SourceForge. <a href="http://hadi.sourceforge.net/">http://hadi.sourceforge.net/</a></p>
-
 <p>Este projeto foi criado originalmente por The9tCat <a href="http://sourceforge.net/users/the9tcat">http://sourceforge.net/users/the9tcat</a></p>
 
-<h1>Como Usar</h1>
+<h1>
+<a name="como-usar" class="anchor" href="#como-usar"><span class="octicon octicon-link"></span></a>Como Usar</h1>
 
 <ol>
-<li><p>Importe a biblioteca do Hadi <strong>(hadi_sdk.jar)</strong> para dentro do seu projeto Android. (Por enquanto faça o download da lib aqui: (<a href="http://sourceforge.net/projects/hadi/files/">hadi__sdk.jar</a>)
-Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".</p></li>
-<li><p>Edite seu <strong>AndroidManifest.xml</strong></p></li>
+<li>Importe a biblioteca do Hadi <strong>(hadi-*.jar)</strong> para dentro do seu projeto Android. Por enquanto faça o download da lib aqui: (<a href="https://github.com/PepeuCps/Hadi/releases">https://github.com/PepeuCps/Hadi/releases</a>
+</li>
+</ol><p>Se estiver usando Eclipse não esqueça de clicar com o botão direito na lib e escolher "Add To Build Path".</p>
+
+<ol>
+<li>Edite seu <strong>AndroidManifest.xml</strong>
+</li>
 </ol><p>Adicione o atributo "android:name" no seu elemento application. Algo parecido com isso:</p>
 
 <pre><code>    &lt;application android:name="com.the9tcat.hadi.HadiApplication" android:icon="@drawable/icon" android:label="@string/app_name"&gt;
@@ -188,17 +203,19 @@ dao.delete_by_primary(b1);
 <li><p>Você pode achar mais exemplo nos projeto de demonstração.</p></li>
 </ol>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Hadi maintained by <a href="https://github.com/PepeuCps">PepeuCps</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
-    
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-43441053-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
 
   </body>
 </html>
