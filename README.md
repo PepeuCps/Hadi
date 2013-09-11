@@ -71,6 +71,18 @@ Define your database name and version under element Application, it looks like t
 
 5. You could find all the example codes from demo project or if you have any quaestions send a e-mail to hadiormdev@gmail.com.
 
+# PROGUARD
+
+Pay attention with proguard configurations when you use HADI because the annotations and the property names can cause strange names (table names and columns) in your database.
+Just configure proguard-project.txt with this definitions:
+
+1. Don't obuscate HADI:
+<code>-keep class com.the9tcat.hadi.** { *; }</code>
+
+2. Don't obfuscate your model classes:
+<code>-keep class com.yourpackage.model.** { *; }</code>
+
+
 # Hadi (Portuguese Version)
 
 **Hadi** é um framework ORM para Android. Ele faz o SQLite ficar fácil de usar. 
@@ -144,3 +156,15 @@ Defina o nome da sua base de dados e a versão (dentro da tag  Application). Alg
 		dao.delete_by_primary(b1);		
 
 5. Você pode achar mais exemplo nos projeto de demonstração ou qualquer dúvida enviar um e-mail para hadiormdev@gmail.com.
+
+# PROGUARD
+
+Preste atenção com as configurações do Proguard quando você usa-lo em conjunto com o HADI. As anotações e os nomes das classes e propriedades podem gerar resultados estranhos na sua base de dados.
+Configure o proguard-project.txt com a seguintes definições:
+
+1. Não obfusque o HADI:
+<code>-keep class com.the9tcat.hadi.** { *; }</code>
+
+2. Não obfusque suas classes de modelo:
+<code>-keep class com.yourpackage.model.** { *; }</code>
+
