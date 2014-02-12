@@ -111,10 +111,11 @@ public class Util {
                 }
             }
             Class<?> fieldType = field.getType();
-            int columnIndex = cursor.getColumnIndex(fieldName);
+            int columnIndex = cursor.getColumnIndex(fieldName.replace("[","").replace("]",""));
             if (columnIndex < 0) {
                 continue;
             }
+
             field.setAccessible(true);
             try {
                 if ((fieldType.equals(Boolean.class))
@@ -285,6 +286,7 @@ public class Util {
                 list.addAll(list1);
             }
         }
+
         return list;
     }
 }
